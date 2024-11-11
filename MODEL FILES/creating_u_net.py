@@ -108,7 +108,7 @@ unet = unet_model()
 unet.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
 # see structure of the model
-unet.summary()
+print(unet.summary())
 
 # Paths to your training images and masks
 image_paths = os.listdir(r"images")
