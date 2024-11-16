@@ -1,19 +1,30 @@
-from ultralytics import SAM
+from mobile_sam import sam_model_registry, SamAutomaticMaskGenerator
 import cv2
+import torch
 import matplotlib.pyplot as plt
+import sys
 
 # Load the model
-model = SAM('mobile_sam.pt')
+model_type = "vit_t"
+sam_checkpoint = "mobile_sam.pt"
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
-image = cv2.imread(r'D:\Whatever in stock\test\BRAIN SCAN IMAGES\TARP\datasets\test\yes\test_yes1.jpg')
 
-# Run automatic segmentation
-results = model.predict(image, mode='automatic')  # `top_n` limits to top 5 objects
+mobile_sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
+mobile_sam.to(device=device)
+mobile_sam.eval()
 
-# print(results)
+# Load your MRI scan image
+image_path = "path_to_your_mri_scan.jpg"
+image = cv2.imread(image_path)
+image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert to RGB
 
-for i, mask in enumerate(results):  # Assume `masks` is a list of binary masks
-    plt.imshow(mask, cmap='gray')
-    plt.title(f'Mask {i+1}')
+# Use automatic segmentation
+mask_generator = SamAutomaticMaskGenerator(mobile_sam)
+masks = mask_generator.generate(image)
+
+# Visualize masks
+for mask in masks:
+    plt.imshow(mask['segmentation'], cmap='gray')
     plt.axis('off')
     plt.show()
