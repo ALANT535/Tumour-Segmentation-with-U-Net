@@ -37,7 +37,8 @@ const ImageUpload = () => {
       }
 
       const data = await response.json();
-      setPrediction(data.prediction);
+      const predictionValue = parseFloat(data.prediction);
+      setPrediction(predictionValue > 0.7 ? "Tumour exists in the image" : "No tumour detected");
     } catch (err) {
       setError('Failed to get prediction. Please try again.');
       console.error('Error:', err);
