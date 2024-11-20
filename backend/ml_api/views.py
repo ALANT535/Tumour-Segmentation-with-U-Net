@@ -4,11 +4,15 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import io
+import os
 
 # Load the saved CNN model
 model = None
+
+model_path = os.path.join(os.path.dirname(os.path.dirname((os.path.dirname(os.path.abspath(__file__))))) , "SAVED CNN MODEL FILES" , "saved_model.h5")
+
 try:
-    model = tf.keras.models.load_model('/home/rohitb/projects/del/del1/SAVED CNN MODEL FILES/saved_model.h5')
+    model = tf.keras.models.load_model(model_path)
 except Exception as e:
     print(f"Error loading model: {e}")
 
