@@ -6,6 +6,10 @@ This project implements a tumour detection system using a U-Net architecture, a 
 
 The project includes preprocessing, model training, evaluation, and deployment of the tumour detection pipeline, making it an end-to-end solution for medical image segmentation tasks.
 
+# Sample Segmentation and Prediction
+![Original Image](sample_segmentation/input_image.jpg)
+
+
 ## Technologies Used
 
 **Python:**  
